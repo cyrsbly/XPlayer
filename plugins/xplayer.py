@@ -272,7 +272,7 @@ def check_audio(duration: int, audio_key: str, playlist: List) -> Optional[str]:
         return f"Song Duration is {'invalid' if duration == 0 else 'too long'}"
     # check if already in Playlist
     if playlist and (audio_key in [x["id"] for x in playlist]):
-        return "Song Already Added in Queue"
+        return "Song already added in queue."
 
 
 @pool.run_in_thread
@@ -709,7 +709,7 @@ async def play_voice_chat(m: Message, gc: XPlayer):
         and m.chat.id not in VC_GROUP_MODE_CHATS
     ):
         return
-    await m.edit("`Processing ...`")
+    await m.edit("`Loading...`")
     reply = m.reply_to_message
     playlist = gc.playlist
     if reply and reply.media_group_id:
@@ -829,7 +829,7 @@ async def stop_voice_chat(m: Message, gc: XPlayer):
         if kill_list:
             await asyncio.gather(*kill_list)
     else:
-        await m.edit("Sending signal.SIGTERM...")
+        await m.edit("Stopping..")
         await kill_radio(m.chat.id)
         await gc.leave()
     await m.edit("Stopped Successfully.")
@@ -903,7 +903,7 @@ async def mute_voice_chat(m: Message, gc: XPlayer):
 @add_groupcall
 async def unmute_voice_chat(m: Message, gc: XPlayer):
     """Unmute voice chat."""
-    await m.edit("🔈  __UnMuting Self__ ...", del_in=5)
+    await m.edit("🔈  __Unmuting self__ ...", del_in=5)
     gc.set_is_mute(False)
 
 

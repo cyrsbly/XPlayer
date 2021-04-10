@@ -624,7 +624,7 @@ if userge.has_bot:
 
 
 @userge.on_cmd(
-    "joinvc",
+    "join",
     about={
         "header": "Join voice chat",
         "description": "Join voice chat in current group.",
@@ -646,7 +646,7 @@ async def join_voice_chat(m: Message, gc: XPlayer):
 
 
 @userge.on_cmd(
-    "skipvc",
+    "skip",
     about={
         "header": "Skip [n] songs",
         "description": "Skip current playing song",
@@ -680,7 +680,7 @@ async def skip_song_voice_chat(m: Message, gc: XPlayer):
 
 
 @userge.on_cmd(
-    "playvc",
+    "play",
     about={
         "header": "Play song in voice chats",
         "description": "Play Songs in VC by audio file / media group or song name or song URL"
@@ -804,7 +804,7 @@ async def play_voice_chat(m: Message, gc: XPlayer):
 
 
 @userge.on_cmd(
-    "stopvc",
+    "stop",
     about={
         "header": "Leave the fun.",
         "description": "Leave voice chat in current group.",
@@ -836,7 +836,7 @@ async def stop_voice_chat(m: Message, gc: XPlayer):
 
 
 @userge.on_cmd(
-    "pausevc",
+    "pause",
     about={
         "header": "Silence for a moment !",
         "description": "Pause current playing song.",
@@ -854,7 +854,7 @@ async def pause_voice_chat(m: Message, gc: XPlayer):
 
 
 @userge.on_cmd(
-    "resumevc",
+    "resume",
     about={
         "header": "Let the sound begin !",
         "description": "Resume current paused song.",
@@ -872,7 +872,7 @@ async def resume_voice_chat(m: Message, gc: XPlayer):
 
 
 @userge.on_cmd(
-    "mutevc",
+    "mute",
     about={
         "header": "Shhhh stay silent.",
         "description": "Mute voice chat.",
@@ -890,7 +890,7 @@ async def mute_voice_chat(m: Message, gc: XPlayer):
 
 
 @userge.on_cmd(
-    "unmutevc",
+    "unmute",
     about={
         "header": "Yey you can talk.",
         "description": "Mute voice chat.",

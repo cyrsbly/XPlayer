@@ -210,7 +210,7 @@ async def play_now(gc: XPlayer) -> None:
         atitle = r["title"]
     text = f'🎵 **{atitle}**\n🕐 Duration : `{time_formatter(r["duration"])}`'
     if r["by_user"]:
-        text += f'\n\n🤖 __Music Bot by @ryscuu25.__'
+        text += f'\n\n🤖 __Music Bot by @ryscuu25.__\nℹ Follow @cmbupates for **bot updates**.'
     if thumb and os.path.exists(thumb):
         await client.send_photo(gc.chat_id, photo=thumb, caption=text)
         os.remove(thumb)
@@ -637,10 +637,10 @@ async def join_voice_chat(m: Message, gc: XPlayer):
     """Join the voice chat."""
     try:
         if gc.is_active:
-            await m.edit("Nasa voicechat na po ako. If wala, use !stop.", del_in=5)
+            await m.edit("__Nasa voicechat na po ako. If wala, use !stop.__", del_in=10)
         else:
             await gc.join()
-            await m.edit("**Joined** successfully.", del_in=3)
+            await m.edit("**Joined** successfully.", del_in=6)
     except RuntimeError:
         await m.err("__Bes, start ka muna ng voice call bago mo ko pasalihin sa call.__")
 
@@ -660,7 +660,7 @@ async def join_voice_chat(m: Message, gc: XPlayer):
 async def skip_song_voice_chat(m: Message, gc: XPlayer):
     """Skip Current playing song."""
     if len(gc.playlist) == 0:
-        await m.edit("__Alin ang iiskip? Wala naman nasa playlist.__", del_in=5)
+        await m.edit("__Alin ang iiskip? Wala naman nasa playlist.__", del_in=10)
         return
     sk_e = "Provide a valid number of songs to skip"
     if m.input_str:
@@ -709,7 +709,7 @@ async def play_voice_chat(m: Message, gc: XPlayer):
         and m.chat.id not in VC_GROUP_MODE_CHATS
     ):
         return
-    await m.edit("Pilitin mo muna ako, charot. Wait.")
+    await m.edit("__🌀 Loading...__")
     reply = m.reply_to_message
     playlist = gc.playlist
     if reply and reply.media_group_id:
@@ -738,7 +738,7 @@ async def play_voice_chat(m: Message, gc: XPlayer):
                         )
                     )
         if len(audio_list) == 0:
-            await m.err("Waley. Try again?")
+            await m.err("Waley, as in. Try again?")
         else:
             await m.edit(
                 f"**{len(audio_list)} Songs** added to playlist successfully!",
@@ -819,7 +819,7 @@ async def play_voice_chat(m: Message, gc: XPlayer):
 async def stop_voice_chat(m: Message, gc: XPlayer):
     """Leave voice chat."""
     if "-all" in m.flags:
-        await m.edit("Heto na, aalis na...")
+        await m.edit("__Heto na, aalis na...__")
         kill_list = []
         chat_ids = list(FFMPEG_PROCESSES)
         if chat_ids:
@@ -829,10 +829,10 @@ async def stop_voice_chat(m: Message, gc: XPlayer):
         if kill_list:
             await asyncio.gather(*kill_list)
     else:
-        await m.edit("Kalma, heto na aalis na ko.")
+        await m.edit("__Kalma, heto na aalis na ko.__")
         await kill_radio(m.chat.id)
         await gc.leave()
-    await m.edit("Payapa na ulit ang voice chat 😴")
+    await m.edit("__Payapa na ulit ang voice chat 😴__")
 
 
 @userge.on_cmd(

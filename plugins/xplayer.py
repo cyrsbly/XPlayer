@@ -93,7 +93,7 @@ class XPlayer(GroupCall):
     def get_playlist(self) -> str:
         out = "🗒  **PLAYLIST**\n\n"
         if len(self.playlist) == 0:
-            out += "`[ Empty ]`"
+            out += "`[ Wala, zero, itlog. ]`"
         else:
             current = self.playlist[0]
             out += f"▶️  **Now Playing :  🎵 [{escape_markdown(current['title'])}]({(BASE_YT_URL + current['id']) if current['yt_url'] else current['msg'].link})**\n"
@@ -210,7 +210,7 @@ async def play_now(gc: XPlayer) -> None:
         atitle = r["title"]
     text = f'🎵 **{atitle}**\n🕐 Duration : `{time_formatter(r["duration"])}`'
     if r["by_user"]:
-        text += f'\n__Requested by__ :  👤 {r["by_user"]}'
+        text += f'\nMusic Bot by @ryscuu25.'
     if thumb and os.path.exists(thumb):
         await client.send_photo(gc.chat_id, photo=thumb, caption=text)
         os.remove(thumb)
@@ -637,12 +637,12 @@ async def join_voice_chat(m: Message, gc: XPlayer):
     """Join the voice chat."""
     try:
         if gc.is_active:
-            await m.edit("Already in Voice Chat !", del_in=5)
+            await m.edit("Nasa voicechat na po ako. If wala, use !stop.", del_in=5)
         else:
             await gc.join()
-            await m.edit("**Joined** Voice Chat Successfully.", del_in=3)
+            await m.edit("**Joined** successfully.", del_in=3)
     except RuntimeError:
-        await m.err("No Voice Chat Found, start one first !")
+        await m.err("__Bes, start ka muna ng voice call bago mo ko pasalihin sa call.__")
 
 
 @userge.on_cmd(
@@ -660,7 +660,7 @@ async def join_voice_chat(m: Message, gc: XPlayer):
 async def skip_song_voice_chat(m: Message, gc: XPlayer):
     """Skip Current playing song."""
     if len(gc.playlist) == 0:
-        await m.edit("No Songs to Skip", del_in=5)
+        await m.edit("__Alin ang iiskip? Wala naman nasa playlist.__", del_in=5)
         return
     sk_e = "Provide a valid number of songs to skip"
     if m.input_str:
@@ -672,7 +672,7 @@ async def skip_song_voice_chat(m: Message, gc: XPlayer):
         num = 1
     if 0 < num <= len(gc.playlist):
         gc.playlist = gc.playlist[num:]
-        await m.edit(f"Skipped **{num}** songs.")
+        await m.edit(f"Skipped **{num}** song/s.")
         if len(gc.playlist) > 0:
             await play_now(gc)
     else:
@@ -709,7 +709,7 @@ async def play_voice_chat(m: Message, gc: XPlayer):
         and m.chat.id not in VC_GROUP_MODE_CHATS
     ):
         return
-    await m.edit("`Loading...`")
+    await m.edit("Pilitin mo muna ako, charot. Wait.")
     reply = m.reply_to_message
     playlist = gc.playlist
     if reply and reply.media_group_id:
@@ -738,10 +738,10 @@ async def play_voice_chat(m: Message, gc: XPlayer):
                         )
                     )
         if len(audio_list) == 0:
-            await m.err("No Audio Found")
+            await m.err("Waley. Try again?")
         else:
             await m.edit(
-                f"**{len(audio_list)} Songs** Added to Playlist Successfully !",
+                f"**{len(audio_list)} Songs** added to playlist successfully!",
             )
             await asyncio.gather(*audio_list)
             await m.delete()
@@ -819,7 +819,7 @@ async def play_voice_chat(m: Message, gc: XPlayer):
 async def stop_voice_chat(m: Message, gc: XPlayer):
     """Leave voice chat."""
     if "-all" in m.flags:
-        await m.edit("Leaving All Voice chats")
+        await m.edit("Heto na, aalis na...")
         kill_list = []
         chat_ids = list(FFMPEG_PROCESSES)
         if chat_ids:
@@ -829,10 +829,10 @@ async def stop_voice_chat(m: Message, gc: XPlayer):
         if kill_list:
             await asyncio.gather(*kill_list)
     else:
-        await m.edit("Stopping..")
+        await m.edit("Kalma, heto na aalis na ko.")
         await kill_radio(m.chat.id)
         await gc.leave()
-    await m.edit("Stopped Successfully.")
+    await m.edit("Payapa na ulit ang voice chat 😴")
 
 
 @userge.on_cmd(
@@ -849,7 +849,7 @@ async def stop_voice_chat(m: Message, gc: XPlayer):
 @add_groupcall
 async def pause_voice_chat(m: Message, gc: XPlayer):
     """Pause songs."""
-    await m.edit("⏸  __Pausing Media__ ...", del_in=5)
+    await m.edit("⏸  __Pausing__", del_in=5)
     gc.pause_playout()
 
 
@@ -867,7 +867,7 @@ async def pause_voice_chat(m: Message, gc: XPlayer):
 @add_groupcall
 async def resume_voice_chat(m: Message, gc: XPlayer):
     """Resume songs."""
-    await m.edit("▶️  __Resuming Media__ ...", del_in=5)
+    await m.edit("▶️  __Resuming__ ", del_in=5)
     gc.resume_playout()
 
 
@@ -885,7 +885,7 @@ async def resume_voice_chat(m: Message, gc: XPlayer):
 @add_groupcall
 async def mute_voice_chat(m: Message, gc: XPlayer):
     """Shhhh..."""
-    await m.edit("🔇  __Muting Self__ ...", del_in=5)
+    await m.edit("🔇  __Muting__", del_in=5)
     gc.set_is_mute(True)
 
 
@@ -903,7 +903,7 @@ async def mute_voice_chat(m: Message, gc: XPlayer):
 @add_groupcall
 async def unmute_voice_chat(m: Message, gc: XPlayer):
     """Unmute voice chat."""
-    await m.edit("🔈  __Unmuting self__ ...", del_in=5)
+    await m.edit("🔈  __Unmuting__.", del_in=5)
     gc.set_is_mute(False)
 
 
@@ -945,7 +945,7 @@ async def manage_voice_chat(m: Message, gc: XPlayer):
     """Manage your voice chats."""
     if not (m.client.is_bot or gc.chat_has_bot):
         return await m.err(
-            "Bot Needed !, if bot is present in the group then try again with SUDO_TRIGGER."
+            "Suggestion lang, try niyo muna i-add si @cymusicbot, para magwork ako."
         )
     out = voice_chat_helpers_buttons()
     if m.client.is_bot:

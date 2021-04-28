@@ -210,7 +210,7 @@ async def play_now(gc: XPlayer) -> None:
         atitle = r["title"]
     text = f'🎵 **{atitle}**\n🕐 Duration : `{time_formatter(r["duration"])}`'
     if r["by_user"]:
-        text += f'\nMusic Bot by @ryscuu25.'
+        text += f'\n\n🤖 __Music Bot by @ryscuu25.__'
     if thumb and os.path.exists(thumb):
         await client.send_photo(gc.chat_id, photo=thumb, caption=text)
         os.remove(thumb)
@@ -469,7 +469,7 @@ async def append_playlist(gc: XPlayer, m: Message, media_grp: bool, **kwargs) ->
         await play_now(gc)
         await m.delete()
     elif not media_grp:
-        text = f"Added to Queue at **#{pl_length - 1}\nSONG :** `{title}`"
+        text = f"Added to Queue at **#{pl_length - 1}\nSong:** `{title}`"
         await m.edit((f"[\u200c]({thumb})" + text) if thumb else text)
 
 

@@ -210,7 +210,7 @@ async def play_now(gc: XPlayer) -> None:
         atitle = r["title"]
     text = f'🎵 **{atitle}**\n🕐 Duration : `{time_formatter(r["duration"])}`'
     if r["by_user"]:
-        text += f'\n\n🤖 __Music Bot by [Cy](https://t.me/ryscuu25).__\nℹ **Follow [Cy Music Bot](https://t.me/cmbupdates).**\n ℹ **Need help? Message [Cy Music Bot](https://t.me/cymusicbot)**'
+        text += f'\n\n🤖 __Music Bot by [Cy](https://t.me/ryscuu25).__\nℹ **Follow [Cy Music Bot](https://t.me/cmbupdates).**\nℹ **Need help? Message [Cy Music Bot](https://t.me/cymusicbot)**'
     if thumb and os.path.exists(thumb):
         await client.send_photo(gc.chat_id, photo=thumb, caption=text)
         os.remove(thumb)

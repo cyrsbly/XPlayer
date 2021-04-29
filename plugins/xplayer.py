@@ -210,7 +210,7 @@ async def play_now(gc: XPlayer) -> None:
         atitle = r["title"]
     text = f'🎵 **{atitle}**\n🕐 Duration : `{time_formatter(r["duration"])}`'
     if r["by_user"]:
-        text += f'\n\n🤖 __Music Bot by @ryscuu25.__\nℹ Follow @cmbupates for **bot updates**.'
+        text += f'\n\n🤖 __Music Bot by @ryscuu255.__\nℹ Follow @cmbupdates.'
     if thumb and os.path.exists(thumb):
         await client.send_photo(gc.chat_id, photo=thumb, caption=text)
         os.remove(thumb)
@@ -272,7 +272,7 @@ def check_audio(duration: int, audio_key: str, playlist: List) -> Optional[str]:
         return f"Song Duration is {'invalid' if duration == 0 else 'too long'}"
     # check if already in Playlist
     if playlist and (audio_key in [x["id"] for x in playlist]):
-        return "Song already added in queue."
+        return "__Boomerang? Song already added in queue.__"
 
 
 @pool.run_in_thread
@@ -819,7 +819,7 @@ async def play_voice_chat(m: Message, gc: XPlayer):
 async def stop_voice_chat(m: Message, gc: XPlayer):
     """Leave voice chat."""
     if "-all" in m.flags:
-        await m.edit("__Heto na, aalis na...__")
+        await m.edit("🤖 __Heto na, aalis na...__")
         kill_list = []
         chat_ids = list(FFMPEG_PROCESSES)
         if chat_ids:
@@ -829,10 +829,10 @@ async def stop_voice_chat(m: Message, gc: XPlayer):
         if kill_list:
             await asyncio.gather(*kill_list)
     else:
-        await m.edit("__Kalma, heto na aalis na ko.__")
+        await m.edit("🤖 __Kalma, heto na aalis na ko....__")
         await kill_radio(m.chat.id)
         await gc.leave()
-    await m.edit("__Payapa na ulit ang voice chat 😴__")
+    await m.edit("🤖 __Payapa na ulit ang voice chat.__")
 
 
 @userge.on_cmd(

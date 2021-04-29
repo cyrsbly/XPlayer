@@ -210,7 +210,7 @@ async def play_now(gc: XPlayer) -> None:
         atitle = r["title"]
     text = f'🎵 **{atitle}**\n🕐 Duration : `{time_formatter(r["duration"])}`'
     if r["by_user"]:
-        text += f'\n\n🤖 __Music Bot by @ryscuu255.__\nℹ Follow @cmbupdates.'
+        text += f'\n\n🤖 __Music Bot by [Cy](https://t.me/ryscuu25).__\nℹ **Follow [Cy Music Bot](https://t.me/cmbupdates).**\n ℹ **Need help? Message [Cy Music Bot](https://t.me/cymusicbot)**'
     if thumb and os.path.exists(thumb):
         await client.send_photo(gc.chat_id, photo=thumb, caption=text)
         os.remove(thumb)
@@ -435,10 +435,10 @@ async def set_group_mode(chat_id: int, clearall: bool = False) -> str:
     else:
         if chat_id in VC_GROUP_MODE_CHATS:
             VC_GROUP_MODE_CHATS.remove(chat_id)
-            out = f"❌  playvc **disabled** for __Chat ID__: `{chat_id}`"
+            out = f"❌  Music Bot **disabled** for __Chat ID__: `{chat_id}`"
         else:
             VC_GROUP_MODE_CHATS.add(chat_id)
-            out = f"✅  playvc **enabled** for __Chat ID__: `{chat_id}`"
+            out = f"✅  Music Bot **enabled** for __Chat ID__: `{chat_id}`"
     await SAVED_SETTINGS.update_one(
         {"_id": "VC_GROUP_MODE_CHAT"},
         {"$set": {"chat_ids": list(VC_GROUP_MODE_CHATS)}},
@@ -930,7 +930,7 @@ async def change_vol(m: Message, gc: XPlayer):
 
 
 @userge.on_cmd(
-    "managevc",
+    "mvc",
     about={
         "header": "Manage voice chats.",
         "description": "Manage voice chats in user friendly way.",
@@ -1017,7 +1017,7 @@ async def playlist_voice_chat(m: Message, gc: XPlayer):
 
 
 @userge.on_cmd(
-    "vcgroupmode",
+    "gm",
     about={
         "header": "Allow current group members to use .playvc to play songs in voice chat",
         "flags": {"-d": "disable for all chats"},

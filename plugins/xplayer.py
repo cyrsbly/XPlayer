@@ -272,7 +272,7 @@ def check_audio(duration: int, audio_key: str, playlist: List) -> Optional[str]:
         return f"Song Duration is {'invalid' if duration == 0 else 'too long'}"
     # check if already in Playlist
     if playlist and (audio_key in [x["id"] for x in playlist]):
-        return "__Boomerang? Song already added in queue.__"
+        return "Boomerang? Song already added in queue."
 
 
 @pool.run_in_thread

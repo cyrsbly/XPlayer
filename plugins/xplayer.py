@@ -819,7 +819,7 @@ async def play_voice_chat(m: Message, gc: XPlayer):
 async def stop_voice_chat(m: Message, gc: XPlayer):
     """Leave voice chat."""
     if "-all" in m.flags:
-        await m.edit("🤖 __Heto na, aalis na...__")
+        await m.edit("🌀 __Loading..__")
         kill_list = []
         chat_ids = list(FFMPEG_PROCESSES)
         if chat_ids:

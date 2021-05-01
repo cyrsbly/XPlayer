@@ -208,9 +208,9 @@ async def play_now(gc: XPlayer) -> None:
         )
     else:
         atitle = r["title"]
-    text = f'🎵 **{atitle}**\n🕐 Duration : `{time_formatter(r["duration"])}`'
+    text = f'🎵 **{atitle}**\n🕐 Duration : **{time_formatter(r["duration"])}**'
     if r["by_user"]:
-        text += f'\n\n🤖 __Music Bot by [Cy](https://t.me/ryscuu25).__\nℹ **Follow [Cy Music Bot](https://t.me/cmbupdates).**\nℹ **Need help? Message [Cy Music Bot](https://t.me/cymusicbot)**'
+        text += f'\n\n🤖 __Music Bot by [Cy](https://t.me/ryscuu25).__\nℹ **Follow [Cy Music Bot](https://t.me/cmbupdates)**'
     if thumb and os.path.exists(thumb):
         await client.send_photo(gc.chat_id, photo=thumb, caption=text)
         os.remove(thumb)
@@ -829,10 +829,10 @@ async def stop_voice_chat(m: Message, gc: XPlayer):
         if kill_list:
             await asyncio.gather(*kill_list)
     else:
-        await m.edit("🤖 __Kalma, heto na aalis na ko....__")
+        await m.edit("🤖 __Processing....__")
         await kill_radio(m.chat.id)
         await gc.leave()
-    await m.edit("🤖 __Payapa na ulit ang voice chat.__")
+    await m.edit("🤖 __Mmph, mMmmmmMmmpH...__")
 
 
 @userge.on_cmd(

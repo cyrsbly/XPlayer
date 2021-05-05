@@ -210,7 +210,7 @@ async def play_now(gc: XPlayer) -> None:
         atitle = r["title"]
     text = f'🎵 **{atitle}**\n🕐 Duration : **{time_formatter(r["duration"])}**'
     if r["by_user"]:
-        text += f'\n\n🤖 __Music Bot by [Cy](https://t.me/ryscuu25).__\nℹ **Follow [Cy Music Bot](https://t.me/cmbupdates)**'
+        text += f'\n\n🤖 __Music Bot by [Cy](https://t.me/ryscuu25).__\nℹ **Follow [Cy Music Bot](https://t.me/cmbupdates). \n🤖 Be cool, do not spam.**'
     if thumb and os.path.exists(thumb):
         await client.send_photo(gc.chat_id, photo=thumb, caption=text)
         os.remove(thumb)
@@ -637,12 +637,12 @@ async def join_voice_chat(m: Message, gc: XPlayer):
     """Join the voice chat."""
     try:
         if gc.is_active:
-            await m.edit("__Nasa voicechat na po ako. If wala, use !stop.__", del_in=10)
+            await m.edit("Already joined.", del_in=10)
         else:
             await gc.join()
             await m.edit("**Joined** successfully.", del_in=6)
     except RuntimeError:
-        await m.err("__Bes, start ka muna ng voice call bago mo ko pasalihin sa call.__")
+        await m.err("🤖 __Bes, start ka muna ng voice call bago mo ko pasalihin sa call.__")
 
 
 @userge.on_cmd(
@@ -660,7 +660,7 @@ async def join_voice_chat(m: Message, gc: XPlayer):
 async def skip_song_voice_chat(m: Message, gc: XPlayer):
     """Skip Current playing song."""
     if len(gc.playlist) == 0:
-        await m.edit("__Alin ang iiskip? Wala naman nasa playlist.__", del_in=10)
+        await m.edit("__Alin ang iiskip? Wala namang music na nnasa playlist.__", del_in=10)
         return
     sk_e = "Provide a valid number of songs to skip"
     if m.input_str:
@@ -778,10 +778,10 @@ async def play_voice_chat(m: Message, gc: XPlayer):
             videosSearch = VideosSearch(search_q.strip(), limit=1)
             videosResult = await videosSearch.next()
             if len(res := videosResult["result"]) == 0:
-                return await m.err(f'No Result found for Query:  "{search_q}"')
+                return await m.err(f'No result found for query:  "{search_q}"')
             yt_id = res[0]["id"]
         if not (vid_info := await get_ytvid_info(yt_id)):
-            LOG.info("Something Went Wrong :P")
+            LOG.info("Something went wrong...")
             return
         duration = vid_info["duration"]
         audio_key = yt_id
@@ -832,7 +832,7 @@ async def stop_voice_chat(m: Message, gc: XPlayer):
         await m.edit("🤖 __Processing....__")
         await kill_radio(m.chat.id)
         await gc.leave()
-    await m.edit("🤖 __Mmph, mMmmmmMmmpH...__")
+    await m.edit("🤖 __Bye!__")
 
 
 @userge.on_cmd(

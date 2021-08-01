@@ -93,7 +93,7 @@ class XPlayer(GroupCall):
     def get_playlist(self) -> str:
         out = "🗒  **PLAYLIST**\n\n"
         if len(self.playlist) == 0:
-            out += "`[ Wala, zero, itlog. ]`"
+            out += "`[ No songs. ]`"
         else:
             current = self.playlist[0]
             out += f"▶️  **Now Playing :  🎵 [{escape_markdown(current['title'])}]({(BASE_YT_URL + current['id']) if current['yt_url'] else current['msg'].link})**\n"
@@ -210,7 +210,7 @@ async def play_now(gc: XPlayer) -> None:
         atitle = r["title"]
     text = f'🎵 **{atitle}**\n🕐 Duration : **{time_formatter(r["duration"])}**'
     if r["by_user"]:
-        text += f'\n\n🤖 __Music Bot by [Cy](https://t.me/ryscuu25).__\nℹ **Follow [Cy Music Bot](https://t.me/cmbupdates). \n🤖 Be cool, do not spam.**'
+        text += f'\n\n🤖 __Music Bot by [Sai](https://t.me/@saiiiiiiiii_i).__\nℹ **Follow [my channel].(https://t.me/saibubo). \n🤖 Be cool, do not spam.**'
     if thumb and os.path.exists(thumb):
         await client.send_photo(gc.chat_id, photo=thumb, caption=text)
         os.remove(thumb)
